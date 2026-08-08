@@ -180,8 +180,7 @@
 
 
   <script>
-
-    const clientId = "1535553697336266753";
+    const clientId = "1365521033729151078";
 
     const redirectUri =
       "https://kyotovanilla.github.io/contact.html";
@@ -296,43 +295,46 @@
     }
 
 
-    fetch("docs/secure-webhook.json")
+    /* ================================
+       DISCORD WEBHOOK
+       ================================ */
 
-      .then(response => response.json())
-
-      .then(data => {
-
-        const webhookURL = data.webhook;
-
-        document
-          .getElementById("appealForm")
-          .addEventListener("submit", e => {
-
-            e.preventDefault();
-
-            const name =
-              document.getElementById("name").value;
-
-            const discord =
-              document.getElementById("discord").value;
-
-            const message =
-              document.getElementById("message").value;
+    const DISCORD_WEBHOOK =
+      "https://discord.com/api/webhooks/1535557052296859688/6mT-3wGZQvkq_pGQu6iOHSDp-LRw81VaNSaSJJOUJ83brTSLaTuLl-w1vImh_sMrCIkm";
 
 
-            const payload = {
+    document
+      .getElementById("appealForm")
+      .addEventListener("submit", async (e) => {
 
-              content:
-                `🌸 **New Kyoto Vanilla Contact Submission!** 🌸\n\n` +
-                `**IGN:** ${name}\n` +
-                `**Discord:** ${discord}\n` +
-                `**Message:** ${message}`
+        e.preventDefault();
 
-            };
+        const name =
+          document.getElementById("name").value.trim();
+
+        const discord =
+          document.getElementById("discord").value.trim();
+
+        const message =
+          document.getElementById("message").value.trim();
 
 
-            fetch(webhookURL, {
+        const payload = {
 
+          content:
+            `🌸 **New Kyoto Vanilla Contact Submission!** 🌸\n\n` +
+            `**IGN:** ${name}\n` +
+            `**Discord:** ${discord}\n` +
+            `**Message:** ${message}`
+
+        };
+
+
+        try {
+
+          const response = await fetch(
+            DISCORD_WEBHOOK,
+            {
               method: "POST",
 
               headers: {
@@ -340,26 +342,37 @@
               },
 
               body: JSON.stringify(payload)
+            }
+          );
 
-            })
 
-              .then(() => {
+          if (!response.ok) {
+            throw new Error(
+              "Webhook request failed"
+            );
+          }
 
-                alert(
-                  "Appeal sent! Thank you 🌸"
-                );
 
-              })
+          alert(
+            "Appeal sent! Thank you 🌸"
+          );
 
-              .catch(() => {
 
-                alert(
-                  "Error sending appeal."
-                );
+          document
+            .getElementById("appealForm")
+            .reset();
 
-              });
+        }
 
-          });
+        catch (error) {
+
+          console.error(error);
+
+          alert(
+            "Error sending appeal."
+          );
+
+        }
 
       });
 
