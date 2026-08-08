@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Suspension Appeal - Kyoto Vanilla</title>
+
+  <style>
+    body {
+      background-color: #241c27;
+      font-family: Arial, sans-serif;
+      color: #f7edf5;
+      text-align: center;
+      margin: 0;
+      padding: 50px 20px;
+    }
+
+    h1 {
+      color: #f28fbe;
+      margin-bottom: 30px;
+    }
+
+    form {
+      display: inline-block;
+      text-align: left;
+      background: #302331;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+      border: 1px solid #493542;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+      color: #eadce7;
+    }
+
+    input,
+    textarea {
+      width: 300px;
+      padding: 10px;
+      background-color: #241c27;
+      color: #f7edf5;
+      border: 1px solid #594250;
+      border-radius: 6px;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    textarea {
+      resize: vertical;
+    }
+
+    input:focus,
+    textarea:focus {
+      outline: none;
+      border-color: #d96ba3;
+      box-shadow: 0 0 0 2px rgba(217, 107, 163, 0.15);
+    }
+
+    input[readonly] {
+      background-color: #3a2b38;
+      color: #cdb5c5;
+    }
+
+    button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 12px;
+      background-color: #d96ba3;
+      border: none;
+      color: white;
+      font-size: 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.25s;
+    }
+
+    button:hover {
+      background-color: #f28fbe;
+      color: #241c27;
+    }
+
+    #discordLogin {
+      background-color: #d96ba3;
+      color: white;
+      padding: 12px 30px;
+      border-radius: 8px;
+      border: none;
+      display: inline-block;
+      margin-bottom: 30px;
+      margin-top: 20px;
+      cursor: pointer;
+    }
+
+    #discordLogin:hover {
+      background-color: #f28fbe;
+      color: #241c27;
+    }
+
+    #logoutButton {
+      display: none;
+    }
+
+    footer {
+      margin-top: 60px;
+      color: #9f8295;
+      font-size: 14px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>Suspension Appeal</h1>
+
+  <!-- =========================================
+       FAKE DISCORD LOGIN
+       ========================================= -->
+
+  <button id="discordLogin" onclick="loginWithDiscord()">
+    Login with Discord
+  </button>
+
+
+  <!-- =========================================
+       SUSPENSION APPEAL FORM
+       ========================================= -->
+
+  <form id="appealForm" style="display: none;">
+
+    <label for="name">IGN</label>
+
+    <input
+      type="text"
+      id="name"
+      placeholder="Your Minecraft username"
+      required
+    />
+
+
+    <label for="discord">Discord</label>
+
+    <input
+      type="text"
+      id="discord"
+      readonly
+      required
+    />
+
+
+    <label for="reason">Reason for Suspension</label>
+
+    <input
+      type="text"
+      id="reason"
+      placeholder="Why were you suspended?"
+      required
+    />
+
+
+    <label for="message">Appeal Message</label>
+
+    <textarea
+      id="message"
+      rows="5"
+      placeholder="Explain why your suspension should be removed..."
+      required
+    ></textarea>
+
+
+    <button type="submit">
+      Send Appeal
+    </button>
+
+  </form>
+
+
+  <!-- =========================================
+       NAVIGATION
+       ========================================= -->
+
+  <div
+    style="
+      margin-top: 32px;
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+    "
+  >
+
+    <button
+      onclick="window.location.href='index.html'"
+      style="
+        padding: 12px 15px;
+        background-color: #d96ba3;
+        border: none;
+        color: white;
+        font-size: 16px;
+        border-radius: 8px;
+        cursor: pointer;
+        width: auto;
+        margin-top: 0;
+      "
+    >
+      ← Back to Home
+    </button>
+
+
+    <button
+      id="logoutButton"
+      onclick="logoutDiscord()"
+      style="
+        display: none;
+        padding: 12px 15px;
+        background-color: #d96ba3;
+        border: none;
+        color: white;
+        font-size: 16px;
+        border-radius: 8px;
+        cursor: pointer;
+        width: auto;
+        margin-top: 0;
+      "
+    >
+      Logout
+    </button>
+
+  </div>
+
+
+  <!-- =========================================
+       FOOTER
+       ========================================= -->
+
+  <footer>
+    © 2025 Kyoto Vanilla
+  </footer>
+
+
+  <script>
+
+    /* =========================================
+       FAKE DISCORD LOGIN
+       ========================================= */
+
+    function loginWithDiscord() {
+
+      const fakeDiscord = prompt(
+        "Enter your Discord username (example: User#1234):"
+      );
+
+      if (!fakeDiscord || !fakeDiscord.trim()) {
+        return;
+      }
+
+      document.getElementById("discord").value =
+        fakeDiscord.trim();
+
+      document.getElementById("discordLogin").style.display =
+        "none";
+
+      document.getElementById("appealForm").style.display =
+        "inline-block";
+
+      document.getElementById("logoutButton").style.display =
+        "inline-block";
+    }
+
+
+    /* =========================================
+       LOGOUT
+       ========================================= */
+
+    function logoutDiscord() {
+
+      document.getElementById("discord").value = "";
+
+      document.getElementById("appealForm").style.display =
+        "none";
+
+      document.getElementById("discordLogin").style.display =
+        "inline-block";
+
+      document.getElementById("logoutButton").style.display =
+        "none";
+    }
+
+
+    /* =========================================
+       DISCORD WEBHOOK
+       
+       PASTE YOUR WEBHOOK URL BETWEEN THE
+       QUOTES BELOW.
+       ========================================= */
+
+    const webhookURL =
+      "https://discord.com/api/webhooks/1535557052296859688/6mT-3wGZQvkq_pGQu6iOHSDp-LRw81VaNSaSJJOUJ83brTSLaTuLl-w1vImh_sMrCIkm";
+
+
+    /* =========================================
+       SUBMIT APPEAL
+       ========================================= */
+
+    document
+      .getElementById("appealForm")
+      .addEventListener("submit", async function(e) {
+
+        e.preventDefault();
+
+
+        const name =
+          document
+            .getElementById("name")
+            .value
+            .trim();
+
+
+        const discord =
+          document
+            .getElementById("discord")
+            .value
+            .trim();
+
+
+        const reason =
+          document
+            .getElementById("reason")
+            .value
+            .trim();
+
+
+        const message =
+          document
+            .getElementById("message")
+            .value
+            .trim();
+
+
+        /* =========================================
+           WEBHOOK PAYLOAD
+           ========================================= */
+
+        const payload = {
+
+          username: "Kyoto Vanilla",
+
+          embeds: [
+
+            {
+              title:
+                "🌸 New Suspension Appeal Submitted",
+
+              color:
+                0xd96ba3,
+
+              fields: [
+
+                {
+                  name: "IGN",
+
+                  value:
+                    name || "Not provided",
+
+                  inline: true
+                },
+
+
+                {
+                  name: "Discord",
+
+                  value:
+                    discord || "Not provided",
+
+                  inline: true
+                },
+
+
+                {
+                  name: "Reason for Suspension",
+
+                  value:
+                    reason || "Not provided"
+                },
+
+
+                {
+                  name: "Appeal Message",
+
+                  value:
+                    message || "Not provided"
+                }
+
+              ],
+
+              footer: {
+
+                text:
+                  "Kyoto Vanilla • Suspension Appeals"
+
+              },
+
+              timestamp:
+                new Date().toISOString()
+
+            }
+
+          ]
+
+        };
+
+
+        /* =========================================
+           SEND TO DISCORD WEBHOOK
+           ========================================= */
+
+        try {
+
+          if (
+            webhookURL ===
+            "PASTE_YOUR_DISCORD_WEBHOOK_HERE"
+          ) {
+
+            alert(
+              "Please add your Discord webhook URL in the code first."
+            );
+
+            return;
+          }
+
+
+          const response =
+            await fetch(
+              webhookURL,
+              {
+
+                method: "POST",
+
+                headers: {
+
+                  "Content-Type":
+                    "application/json"
+
+                },
+
+                body:
+                  JSON.stringify(payload)
+
+              }
+            );
+
+
+          if (!response.ok) {
+
+            throw new Error(
+              "Webhook request failed"
+            );
+
+          }
+
+
+          alert(
+            "Suspension appeal sent successfully! 🌸"
+          );
+
+
+          document
+            .getElementById("appealForm")
+            .reset();
+
+
+        } catch (error) {
+
+          console.error(
+            "Webhook error:",
+            error
+          );
+
+          alert(
+            "Error sending suspension appeal. Please check your webhook URL."
+          );
+
+        }
+
+      });
+
+  </script>
+
+</body>
+</html>
