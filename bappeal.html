@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Ban Appeal - Kyoto Vanilla</title>
+
+  <style>
+    body {
+      background-color: #241c27;
+      font-family: Arial, sans-serif;
+      color: #f7edf5;
+      text-align: center;
+      padding: 50px 20px;
+    }
+
+    h1 {
+      color: #f28fbe;
+      margin-bottom: 30px;
+    }
+
+    form {
+      display: inline-block;
+      text-align: left;
+      background: #302331;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      border: 1px solid #493542;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+      color: #eadce7;
+    }
+
+    input,
+    textarea {
+      width: 300px;
+      padding: 10px;
+      background-color: #241c27;
+      color: #f7edf5;
+      border: 1px solid #594250;
+      border-radius: 6px;
+      box-sizing: border-box;
+    }
+
+    input:focus,
+    textarea:focus {
+      outline: none;
+      border-color: #d96ba3;
+    }
+
+    input[readonly] {
+      background-color: #3a2b38;
+      color: #cdb5c5;
+    }
+
+    button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 12px;
+      background-color: #d96ba3;
+      border: none;
+      color: white;
+      font-size: 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.25s;
+    }
+
+    button:hover {
+      background-color: #f28fbe;
+      color: #241c27;
+    }
+
+    #discordLogin {
+      background-color: #d96ba3;
+      color: white;
+      padding: 12px 30px;
+      border-radius: 8px;
+      border: none;
+      display: inline-block;
+      margin-bottom: 30px;
+      margin-top: 20px;
+      cursor: pointer;
+    }
+
+    #discordLogin:hover {
+      background-color: #f28fbe;
+      color: #241c27;
+    }
+
+    footer {
+      margin-top: 60px;
+      color: #9f8295;
+      font-size: 14px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>Ban Appeal</h1>
+
+  <button id="discordLogin" onclick="loginWithDiscord()">
+    Login with Discord
+  </button>
+
+  <form id="appealForm" style="display:none;">
+
+    <label for="name">IGN</label>
+    <input type="text" id="name" required />
+
+    <label for="discord">Discord</label>
+    <input type="text" id="discord" readonly required />
+
+    <label for="reason">Reason for Ban</label>
+    <input type="text" id="reason" required />
+
+    <label for="message">Appeal Message</label>
+    <textarea id="message" rows="4" required></textarea>
+
+    <button type="submit">
+      Submit Appeal
+    </button>
+
+  </form>
+
+  <footer>
+    &copy; 2025 Kyoto Vanilla
+  </footer>
+
+
+  <script>
+
+    /*
+      IMPORTANT:
+      A GitHub repository secret cannot be accessed
+      directly by client-side HTML/JavaScript.
+
+      If you use a direct Discord webhook, put the
+      webhook URL here instead.
+    */
+
+    const webhookURL =
+      "https://discord.com/api/webhooks/1535557052296859688/6mT-3wGZQvkq_pGQu6iOHSDp-LRw81VaNSaSJJOUJ83brTSLaTuLl-w1vImh_sMrCIkm";
+
+
+    function loginWithDiscord() {
+
+      // Fake Discord login for testing
+      const fakeDiscord =
+        prompt(
+          "Enter your Discord username (e.g., User#1234):"
+        );
+
+      if (fakeDiscord) {
+
+        document.getElementById("discord").value =
+          fakeDiscord;
+
+        document.getElementById("discordLogin").style.display =
+          "none";
+
+        document.getElementById("appealForm").style.display =
+          "block";
+      }
+    }
+
+
+    document
+      .getElementById("appealForm")
+      .addEventListener("submit", function (e) {
+
+        e.preventDefault();
+
+
+        const data = {
+
+          username: "Kyoto Vanilla",
+
+          embeds: [
+
+            {
+              title: "🌸 New Ban Appeal Submitted",
+
+              color: 0xd96ba3,
+
+              fields: [
+
+                {
+                  name: "IGN",
+                  value:
+                    document.getElementById("name").value
+                },
+
+                {
+                  name: "Discord",
+                  value:
+                    document.getElementById("discord").value
+                },
+
+                {
+                  name: "Reason for Ban",
+                  value:
+                    document.getElementById("reason").value
+                },
+
+                {
+                  name: "Appeal Message",
+                  value:
+                    document.getElementById("message").value
+                }
+
+              ],
+
+              timestamp:
+                new Date().toISOString()
+            }
+
+          ]
+
+        };
+
+
+        fetch(webhookURL, {
+
+          method: "POST",
+
+          headers: {
+            "Content-Type": "application/json"
+          },
+
+          body: JSON.stringify(data)
+
+        })
+
+        .then(response => {
+
+          if (!response.ok) {
+            throw new Error("Webhook request failed");
+          }
+
+          alert(
+            "Appeal submitted successfully! 🌸"
+          );
+
+          document
+            .getElementById("appealForm")
+            .reset();
+
+          document
+            .getElementById("appealForm")
+            .style.display = "none";
+
+          document
+            .getElementById("discordLogin")
+            .style.display = "inline-block";
+
+        })
+
+        .catch(error => {
+
+          alert(
+            "Error submitting appeal."
+          );
+
+          console.error(error);
+
+        });
+
+      });
+
+  </script>
+
+</body>
+</html>
