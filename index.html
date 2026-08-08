@@ -186,6 +186,8 @@
     &copy; 2025 Kyoto Vanilla. All rights reserved.
   </footer>
 
+  <audio id="bgMusic" src="music.mp3" loop></audio>
+
   <script>
     const quotes = [
       '"Just hold w and click" - Wisp0202',
@@ -213,6 +215,18 @@
     showNextQuote();
 
     setInterval(showNextQuote, 4000);
+
+    const bgMusic = document.getElementById("bgMusic");
+    let musicStarted = false;
+
+    document.addEventListener("click", () => {
+      if (!musicStarted) {
+        bgMusic.play().catch((err) => {
+          console.log("Playback blocked:", err);
+        });
+        musicStarted = true;
+      }
+    });
   </script>
 
 </body>
