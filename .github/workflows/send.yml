@@ -1,0 +1,50 @@
+name: Send Discord Appeal
+
+on:
+  workflow_dispatch:
+    inputs:
+      ign:
+        required: true
+        type: string
+      discord:
+        required: true
+        type: string
+      message:
+        required: true
+        type: string
+
+jobs:
+  send:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Send appeal to Discord
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          IGN: ${{ inputs.ign }}
+          DISCORD: ${{ inputs.discord }}
+          MESSAGE: ${{ inputs.message }}
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          import urllib.request
+
+          payload = {
+              "content": (
+                  "🌸 **New Kyoto Vanilla Contact Submission!** 🌸\n\n"
+                  f"**IGN:** {os.environ['IGN']}\n"
+                  f"**Discord:** {os.environ['DISCORD']}\n"
+                  f"**Message:** {os.environ['MESSAGE']}"
+              )
+          }
+
+          request = urllib.request.Request(
+              os.environ["DISCORD_WEBHOOK"],
+              data=json.dumps(payload).encode(),
+              headers={"Content-Type": "application/json"},
+              method="POST"
+          )
+
+          urllib.request.urlopen(request)
+          PY
