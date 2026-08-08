@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Kyoto Vanilla's Website</title>
+
+  <style>
+    body {
+      margin: 0;
+      background: #241c27;
+      font-family: 'Segoe UI', sans-serif;
+      color: #f7edf5;
+    }
+
+    header {
+      background: #302331;
+      padding: 20px 50px;
+      border-bottom: 3px solid #d96ba3;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      width: 120px;
+    }
+
+    nav {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .dropdown {
+      position: relative;
+    }
+
+    .dropbtn {
+      background: transparent;
+      color: #fff;
+      border: 2px solid #d96ba3;
+      padding: 10px 16px;
+      font-size: 15px;
+      cursor: pointer;
+      border-radius: 10px;
+      transition: 0.3s;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .dropbtn:hover {
+      background: #d96ba3;
+      color: #241c27;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #302331;
+      min-width: 160px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+      z-index: 1;
+      border: 1px solid #d96ba3;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .dropdown-content a {
+      color: #fff;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+      border-bottom: 1px solid #493542;
+      transition: 0.25s;
+    }
+
+    .dropdown-content a:last-child {
+      border-bottom: none;
+    }
+
+    .dropdown-content a:hover {
+      background-color: #d96ba3;
+      color: #241c27;
+    }
+
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+
+    main {
+      padding: 60px 20px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2.6rem;
+      color: #f28fbe;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 1.1rem;
+      max-width: 700px;
+      margin: 0 auto 30px;
+      color: #eadce7;
+    }
+
+    .quote-box {
+      font-style: italic;
+      margin-top: 40px;
+      color: #dcb8cf;
+      font-size: 1.1rem;
+      height: 40px;
+      transition: opacity 0.5s ease;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+      background-color: #201820;
+      border-top: 2px solid #d96ba3;
+      color: #cdaec2;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <img src="logo.png" alt="Kyoto Vanilla Logo" class="logo">
+
+    <nav>
+
+      <div class="dropdown">
+        <button class="dropbtn">Appeals</button>
+
+        <div class="dropdown-content">
+          <a href="bappeal.html">Ban</a>
+          <a href="sappeal.html">Suspension</a>
+        </div>
+      </div>
+
+      <div class="dropdown">
+        <button class="dropbtn">Tiers</button>
+
+        <div class="dropdown-content">
+          <a href="stiers.html">Tiers</a>
+          <a href="subtiers.html">Sub tiers</a>
+        </div>
+      </div>
+
+      <a
+        class="dropbtn"
+        href="https://discord.gg/pkmA42MMaD"
+        target="_blank"
+      >
+        Discord
+      </a>
+
+      <a class="dropbtn" href="contact.html">
+        Contact
+      </a>
+
+    </nav>
+  </header>
+
+  <main>
+
+    <h1>Welcome to Kyoto Vanilla</h1>
+
+    <p>
+      Your favorite chill space for community, Minecraft, and more.
+      Feel the vibe, share the fun, and explore everything we have to offer.
+    </p>
+
+    <div class="quote-box" id="quoteBox">
+      Loading quote...
+    </div>
+
+  </main>
+
+  <footer>
+    &copy; 2025 Kyoto Vanilla. All rights reserved.
+  </footer>
+
+  <script>
+    const quotes = [
+      '"Just hold w and click" - Wisp0202',
+      '"We actually have to partner with you" - HeroErrorBoy',
+      '"Kid your macroing.." - 8Crafter',
+      '"Ive always wanted a MCBE Vanilla testing server" - cmax363636',
+      '"Wait what the fuck" - ewoker17'
+    ];
+
+    let currentQuote = 0;
+
+    const quoteBox = document.getElementById("quoteBox");
+
+    function showNextQuote() {
+      quoteBox.style.opacity = 0;
+
+      setTimeout(() => {
+        quoteBox.textContent = quotes[currentQuote];
+        quoteBox.style.opacity = 1;
+
+        currentQuote = (currentQuote + 1) % quotes.length;
+      }, 300);
+    }
+
+    showNextQuote();
+
+    setInterval(showNextQuote, 4000);
+  </script>
+
+</body>
+</html>
